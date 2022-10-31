@@ -13,17 +13,16 @@
 
 using namespace std;
 int main(){
-    int a;
     double b = stod("12.34");
-    cout << "b is " << b << endl;
-    cout << "Please enter an int" << endl;
-    cin >> a;
-    cout << "square of " << a << " is " << a*a << endl;
-    cout << "version is " << VERSION_MAJOR << "." << VERSION_MINOR << endl;
+    cout << "This is C++11 feature, b is " << b << endl;
 
-    int c = 12;
-    int d = 12;
-    cout << "result of my_sum(" << c << ", " << d << ") is " << my_sum(c,d) << endl;
+
+    cout << "Version is " << VERSION_MAJOR << "." << VERSION_MINOR << endl;
+
+    int c = 2;
+    int d = 10;
+    cout << "Using function from my_func, result of my_sum(" << c << ", " << d << ") is " << my_sum(c,d) << endl;
+
 
     #ifdef USE_EXTRA_LIB
         extra_func();
@@ -31,8 +30,9 @@ int main(){
         cout << "No extra lib" << endl;
     #endif
 
+
     #ifdef USE_MY_MATH
-        cout << "Use my math" << " " << power(3,2) << endl;
+        printf("Using my math, power(%d,%d) is %d\n", c, d, power(c,d));
     #else
         cout << "Not use my math" << endl;
     #endif

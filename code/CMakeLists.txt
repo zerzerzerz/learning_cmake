@@ -2,7 +2,11 @@
 
 # set cmake minimum version
 cmake_minimum_required(VERSION 3.10)
-project(square VERSION 1.5)
+project(main VERSION 1.5)
+
+
+# set variable names, which src files
+set(src_files main.cpp)
 
 
 # set C++ standard
@@ -34,7 +38,6 @@ configure_file(config.h.in config.h)
 
 
 # set variable and exe filename and src files
-set(src_files square.cpp)
 add_executable(${PROJECT_NAME} ${src_files})
 
 
@@ -44,4 +47,3 @@ target_link_libraries(${PROJECT_NAME} PUBLIC my_func ${my_extra_libs})
 
 # speficy the header location
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/my_func)
-

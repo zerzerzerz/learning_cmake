@@ -1,5 +1,5 @@
 // -- ./code/config.h.in
-#define VERSION_MAJOR @square_VERSION_MAJOR@
-#define VERSION_MINOR @square_VERSION_MINOR@
+#define VERSION_MAJOR @main_VERSION_MAJOR@
+#define VERSION_MINOR @main_VERSION_MINOR@
 #cmakedefine USE_EXTRA_LIB
 #cmakedefine USE_MY_MATH

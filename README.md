@@ -14,9 +14,9 @@ code/
 # 指定cmake的最低版本号，注意VERSION需要大写
 cmake_minimum_required(VERSION 3.10)
 # 指定项目的名称
-project(square)
+project(main)
 # 第一个参数是生成的文件的名字，第二个是参与编译的源文件
-add_executable(square square.cpp)
+add_executable(main main.cpp)
 ```
 ### 运行
   - 首先cd到build文件夹下，执行`cmake ../code`，`../code`表示`CmakeLists.txt`文件所在的目录
@@ -30,9 +30,9 @@ add_executable(square square.cpp)
 ```cmake
 # ./build/CmakeLists.txt
 cmake_minimum_required(VERSION 3.10)
-project(square_variable)
-# 将src_files设置为square.cpp
-set(src_files square.cpp)
+project(main)
+# 将src_files设置为main.cpp
+set(src_files main.cpp)
 # PROJECT_NAME这个变量本身cmake就有，用来指示项目名称
 add_executable(${PROJECT_NAME} ${src_files})
 ```
@@ -41,9 +41,9 @@ add_executable(${PROJECT_NAME} ${src_files})
 ```cmake
 # ./code/CmakeLists.txt
 cmake_minimum_required(VERSION 3.10)
-project(square VERSION 1.0)
+project(main VERSION 1.0)
 configure_file(config.h.in config.h)
-set(src_files square.cpp)
+set(src_files main.cpp)
 add_executable(${PROJECT_NAME} ${src_files})
 # 这句话要加在add_executable后面，不然${PROJECT_NAME}这个目录就会没有build
 # ${PROJECT_BINARY_DIR}表示当前工程二进制目录，编译产物都放在这里
@@ -58,8 +58,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 // 必须这么命名
 // @${PROJECT_NAME}_VERSION_MAJOR@
 // @${PROJECT_NAME}_VERSION_MINOR@
-#define VERSION_MAJOR @square_VERSION_MAJOR@
-#define VERSION_MINOR @square_VERSION_MINOR@
+#define VERSION_MAJOR @main_VERSION_MAJOR@
+#define VERSION_MINOR @main_VERSION_MINOR@
 ```
 ### 指定C++标准
 ```cmake
@@ -79,7 +79,7 @@ code/
         CMakeLists.txt
     CMakeLists.txt
     config.h.in
-    square.cpp
+    main.cpp
 ```
 - 库文件较为简单，分为`.h`声明文件和`.cpp`定义（实现）文件
 ```cpp
@@ -105,7 +105,7 @@ add_library(my_func my_func.cpp)
 ```cmake
 # ./code/CmakeLists.txt
 cmake_minimum_required(VERSION 3.10)
-project(square VERSION 1.5)
+project(main VERSION 1.5)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -114,7 +114,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_subdirectory(my_func)
 
 configure_file(config.h.in config.h)
-set(src_files square.cpp)
+set(src_files main.cpp)
 add_executable(${PROJECT_NAME} ${src_files})
 
 # 让target文件可以使用这个库
@@ -147,14 +147,14 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR} ${PROJEC
 - 还需要修改这个配置文件
 ```cpp
 // -- ./code/config.h.in
-#define VERSION_MAJOR @square_VERSION_MAJOR@
-#define VERSION_MINOR @square_VERSION_MINOR@
+#define VERSION_MAJOR @main_VERSION_MAJOR@
+#define VERSION_MINOR @main_VERSION_MINOR@
 // 会根据CMakeLists里面是否为ON来确定是否有这个宏
 #cmakedefine USE_EXTRA_LIB
 ```
 - 主文件里面也要根据可选库做出相应的修改
 ```cpp
-// ./code/square.cpp
+// ./code/main.cpp
 #ifdef USE_EXTRA_LIB
 #include "my_extra_lib.h"
 #endif
@@ -204,7 +204,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR} ${PROJEC
 
 # set cmake minimum version
 cmake_minimum_required(VERSION 3.10)
-project(square VERSION 1.5)
+project(main VERSION 1.5)
+
+
+# set variable names, which src files
+set(src_files main.cpp)
 
 
 # set C++ standard
@@ -236,7 +240,6 @@ configure_file(config.h.in config.h)
 
 
 # set variable and exe filename and src files
-set(src_files square.cpp)
 add_executable(${PROJECT_NAME} ${src_files})
 
 
