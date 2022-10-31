@@ -1,0 +1,1 @@
+int power(const int&a, const int&n);

@@ -1,4 +1,6 @@
 # Notes for cmake
+## 教程链接
+- [CMake tutorials](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
 - 文件夹目录结构
 ```
 build/
@@ -169,6 +171,79 @@ int main(){
 - 在命令行中修改选项
 ```bash
 # 一个连字符
-# 前面加D（不知道为什么
+# 前面加D（不知道为什么）
+# ON和OFF记得大写~
 cmake ../code -DUSE_EXTRA_LIB=OFF
+```
+
+## 现代化管理可用库
+- 现在介绍一种新的方法管理库，让使用者决定是否使用，这里新建的库为`code/my_math`
+- 首先来看`code/my_math`下面的cmakelists
+```cmake
+# code/my_math/CMakeLists.txt
+# 库的名字 库的源文件
+add_library(my_math my_math.cpp)
+# Remember INTERFACE means things that consumers require but the producer doesn't.
+# ${CMAKE_CURRENT_SOURCE_DIR}指的是当前cmakelists所在目录
+target_include_directories(my_math INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+```
+- 之后修改`code/CMakeLists.txt`
+```cmake
+if(${USE_MY_MATH})
+    # 删掉关于lib所在路径的语句，只需要将这个使用的lib加上即可
+    add_subdirectory(my_math)
+    list(APPEND my_extra_libs my_math)
+endif()
+# 这里一样，删掉库的路径导入，不是完全删掉，是删掉库路径的include
+target_link_libraries(${PROJECT_NAME} PUBLIC my_func ${my_extra_libs})
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/my_func)
+```
+- 此时完整的`code/CMakeLists.txt`如下
+```cmake
+# ./code/CmakeLists.txt
+
+# set cmake minimum version
+cmake_minimum_required(VERSION 3.10)
+project(square VERSION 1.5)
+
+
+# set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+
+# set optional libs
+option(USE_EXTRA_LIB "weather to use my extra lib" ON)
+if(${USE_EXTRA_LIB})
+    add_subdirectory(my_extra_lib)
+    list(APPEND my_extra_libs my_extra_lib)
+endif()
+
+
+# set optional libs
+option(USE_MY_MATH "Wheater to use my math lib" ON)
+if(${USE_MY_MATH})
+    add_subdirectory(my_math)
+    list(APPEND my_extra_libs my_math)
+endif()
+
+# set a lib which must be used
+add_subdirectory(my_func)
+
+
+# set configure file
+configure_file(config.h.in config.h)
+
+
+# set variable and exe filename and src files
+set(src_files square.cpp)
+add_executable(${PROJECT_NAME} ${src_files})
+
+
+# link libs to executable target
+target_link_libraries(${PROJECT_NAME} PUBLIC my_func ${my_extra_libs})
+
+
+# speficy the header location
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/my_func)
 ```

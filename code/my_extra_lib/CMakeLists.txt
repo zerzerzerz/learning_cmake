@@ -1,1 +1,2 @@
 add_library(my_extra_lib my_extra_lib.cpp)
+target_include_directories(my_extra_lib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

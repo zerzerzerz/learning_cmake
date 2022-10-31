@@ -7,6 +7,10 @@
 #include "my_extra_lib.h"
 #endif
 
+#ifdef USE_MY_MATH
+#include "my_math.h"
+#endif
+
 using namespace std;
 int main(){
     int a;
@@ -25,6 +29,12 @@ int main(){
         extra_func();
     #else
         cout << "No extra lib" << endl;
+    #endif
+
+    #ifdef USE_MY_MATH
+        cout << "Use my math" << " " << power(3,2) << endl;
+    #else
+        cout << "Not use my math" << endl;
     #endif
     
     return 0;
