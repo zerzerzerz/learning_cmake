@@ -2,7 +2,7 @@
 
 # set cmake minimum version
 cmake_minimum_required(VERSION 3.10)
-project(main VERSION 1.5)
+project(main VERSION 1.2.3)
 
 
 # set variable names, which src files

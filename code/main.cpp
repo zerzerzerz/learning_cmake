@@ -13,11 +13,12 @@
 
 using namespace std;
 int main(){
+    
+    printf("Project name is %s\n", PROJECT_NAME);
+    printf("Project version is %s\n", PROJECT_VER);
+
     double b = stod("12.34");
     cout << "This is C++11 feature, b is " << b << endl;
-
-
-    cout << "Version is " << VERSION_MAJOR << "." << VERSION_MINOR << endl;
 
     int c = 2;
     int d = 10;
