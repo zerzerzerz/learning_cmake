@@ -8,7 +8,7 @@ code/
     main.cpp
     CMakeLists.txt
 ```
-### 编写`CMakeLists.txt`
+## 编写`CMakeLists.txt`
 ```cmake
 # ./build/CmakeLists.txt
 # 指定cmake的最低版本号，注意VERSION需要大写
@@ -18,13 +18,13 @@ project(main)
 # 第一个参数是生成的文件的名字，第二个是参与编译的源文件
 add_executable(main main.cpp)
 ```
-### 运行
+## 运行
   - 首先cd到build文件夹下，执行`cmake ../code`，`../code`表示`CmakeLists.txt`文件所在的目录
   - 刚刚执行的一步叫做**构建**，生成一堆cmakefiles，但是没有可执行文件生成
   - 之后就能看到在build文件夹下，生成了一堆cmakefiles
   - 最后在这堆cmakefiles所在的目录（这里是build目录），执行`cmake --build .`，就会在那一堆cmakefiles所在的目录，生成对应的可执行文件
   - 这一步称为**编译**
-### 设置变量
+## 设置变量
   - 在cmake文件中，也可以设置变量名，基本的语法是`set(var_name var_value)`
   - 引用变量的时候，用`${var_name}`即可
 ```cmake
@@ -36,12 +36,12 @@ set(src_files main.cpp)
 # PROJECT_NAME这个变量本身cmake就有，用来指示项目名称
 add_executable(${PROJECT_NAME} ${src_files})
 ```
-### 指定项目的版本号
+## 指定项目的版本号
   - 可以在CmakeLists.txt中指定项目的版本号，并且传递给C++文件
 ```cmake
 # ./code/CmakeLists.txt
 cmake_minimum_required(VERSION 3.10)
-project(main VERSION 1.0)
+project(main VERSION 1.2.3)
 configure_file(config.h.in config.h)
 set(src_files main.cpp)
 add_executable(${PROJECT_NAME} ${src_files})
@@ -50,24 +50,21 @@ add_executable(${PROJECT_NAME} ${src_files})
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 ```
 ```cpp
-// 这个文件和*.cpp放在一个目录下面
-// -- ./code/config.h.in
-
 // 运行cmake ../code之后，就能在build/config.h找到这个文件，发现version已经被替换了
-
-// 必须这么命名
-// @${PROJECT_NAME}_VERSION_MAJOR@
-// @${PROJECT_NAME}_VERSION_MINOR@
-#define VERSION_MAJOR @main_VERSION_MAJOR@
-#define VERSION_MINOR @main_VERSION_MINOR@
+// code/config.h.in
+#define PROJECT_NAME "@PROJECT_NAME@"
+#define PROJECT_VER  "@PROJECT_VERSION@"
+#define PROJECT_VER_MAJOR "@PROJECT_VERSION_MAJOR@"
+#define PROJECT_VER_MINOR "@PROJECT_VERSION_MINOR@"
+#define PTOJECT_VER_PATCH "@PROJECT_VERSION_PATCH@"
 ```
-### 指定C++标准
+## 指定C++标准
 ```cmake
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 ```
 
-### 添加库
+## 添加库
 - 这里的库指的是自己编写的库
 - 此时文件结构如下
 ```
