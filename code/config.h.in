@@ -1,0 +1,4 @@
+// -- ./code/config.h.in
+#define VERSION_MAJOR @square_VERSION_MAJOR@
+#define VERSION_MINOR @square_VERSION_MINOR@
+#cmakedefine USE_EXTRA_LIB

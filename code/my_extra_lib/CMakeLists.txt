@@ -1,0 +1,1 @@
+add_library(my_extra_lib my_extra_lib.cpp)
