@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.10)
+project(main VERSION 1.0.0 LANGUAGES CXX)
+
+add_executable(main "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in" "${CMAKE_BINARY_DIR}/config.h")
+target_include_directories(main PRIVATE "${CMAKE_BINARY_DIR}")
+
+
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/my_greet")
+target_link_libraries(main PRIVATE my_greet)
+target_include_directories(main PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/my_greet")
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/my_math")
+target_link_libraries(main PRIVATE my_math)
+target_include_directories(main PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/my_math")
+
+# add src/person
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/person")
+target_link_libraries(main PRIVATE person)
+target_include_directories(main PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/person")
+
+
+# print CMAKE_BINARY_DIR
+message(STATUS "CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")

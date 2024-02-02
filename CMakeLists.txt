@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.10)
+project(pybind11_example)
+
+# compile shared object with pybind11
+add_subdirectory(pybind11)
+
+# file(GLOB SRC_FILES src/*/*.cpp)
+# message(STATUS "SRC_FILES: ${SRC_FILES}")
+# pybind11_add_module(pybind11_example api/api.cpp ${SRC_FILES})
+# target_include_directories(pybind11_example PRIVATE src/person src/my_math src/my_greet)
+
+
+pybind11_add_module(pybind11_example api/api.cpp)
+
+add_subdirectory(src/person)
+target_link_libraries(pybind11_example PRIVATE person)
+target_include_directories(pybind11_example PRIVATE src/person)
+
+add_subdirectory(src/my_math)
+target_link_libraries(pybind11_example PRIVATE my_math)
+target_include_directories(pybind11_example PRIVATE src/my_math)
+
+add_subdirectory(src/my_greet)
+target_link_libraries(pybind11_example PRIVATE my_greet)
+target_include_directories(pybind11_example PRIVATE src/my_greet)
+
