@@ -8,6 +8,8 @@ class Student{
         void setAge(int age);
         int getAge();
         string getName();
+        void setName(const string& name);
+        string display();
     private:
         string name;
         int age;

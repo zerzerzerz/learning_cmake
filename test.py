@@ -11,12 +11,18 @@ tmp_name = "Yukino Yukinoshita"
 pybind11_example.greet(tmp_name)
 pybind11_example.hello(tmp_name)
 pybind11_example.goodbye(tmp_name)
+print()
 
 s = pybind11_example.Student("John", 20)
-print("Name is {}".format(s.getName()))
-print("Age is {}".format(s.getAge()))
+print("previsou name is {}".format(s.getName()))
+s.setName("Alice")
+print("current name is {}".format(s.getName()))
+print("previous age is {}".format(s.getAge()))
 s.setAge(21)
-print("Age is {}".format(s.getAge()))
+print("current age is {}".format(s.getAge()))
+print(s)
+del s
+print()
 
 ans = pybind11_example.calc_e(10000)
 print(ans)

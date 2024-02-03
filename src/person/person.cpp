@@ -22,3 +22,11 @@ int Student::getAge(){
 string Student::getName(){
     return name;
 }
+
+void Student::setName(const string& _name){
+    name = _name;
+}
+
+string Student::display(){
+    return "<name = " + name + ", age = " + to_string(age) + ">";
+}

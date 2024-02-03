@@ -19,7 +19,10 @@ PYBIND11_MODULE(pybind11_example, m) {
 
     py::class_<Student>(m, "Student")
         .def(py::init<const string &, int>(), py::arg("name"), py::arg("age"))
+        .def("getAge", &Student::getAge)
         .def("setAge", &Student::setAge, py::arg("age"))
         .def("getName", &Student::getName)
-        .def("getAge", &Student::getAge);
+        .def("setName", &Student::setName, py::arg("name"))
+        .def("__repr__", &Student::display)
+    ;
 }
