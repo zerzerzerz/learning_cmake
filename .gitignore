@@ -1,2 +1,8 @@
 build/
 .vscode/
+*.out
+*.a
+*.so
+*.so.*
+*.o
+*.exe
