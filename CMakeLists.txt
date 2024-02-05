@@ -1,11 +1,32 @@
 cmake_minimum_required(VERSION 3.10)
-project(pybind11_example)
+project(pybind11_example LANGUAGES CXX)
+
+# check if use CXX compiler
+if(CMAKE_CXX_COMPILER_LOADED)
+    message(STATUS "CXX compiler loaded")
+    message(STATUS "CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
+    message(STATUS "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+    # message compiler flag
+    message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+else()
+    message(FATAL_ERROR "CXX compiler not loaded")
+endif()
+
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release")
+    message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+    # show release flag
+    message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+endif()
+
+
 
 # compile shared object with pybind11
 add_subdirectory(pybind11)
 
 # <variable_name> <help_string> <default_value>
-option(subdir "subdir" ON)
+option(subdir "Option of use add_subdirectory" ON)
 message(STATUS "subdir: ${subdir}")
 if(subdir STREQUAL ON)
     pybind11_add_module(pybind11_example api/api.cpp)
