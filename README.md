@@ -7,6 +7,16 @@ make -j
 python ../test.py
 ```
 
+## 配置Intelligence
+- 创建`.vscode/settings.json`并写入以下内容
+```json
+{
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+}
+```
+- 这样在使用vscode build之后，就能正确进行跳转之类的操作了
+
+
 ## Hard Link and Symbol Link
 ### 文件的创建过程
 - data写入硬盘
@@ -46,3 +56,35 @@ python ../test.py
 - `PUBLIC`, linking to the current target and providing the interface to the other targets that have dependencies on the current target
 - `PRIVATE`, only be used for linking to the current target
 - `INTERFACE`, only be used for providing the interface to the other targets that have dependencies on the current target
+
+### Others
+- `${PROJECT_NAME}`用于获取当前项目的名称
+- `CMAKE_BINARY_DIR`是运行cmake的顶层目录，实际上就是pwd
+
+### install
+```cmake
+# Binaries
+install (TARGETS <bin_name> DESTINATION bin)
+
+# Library
+install (TARGETS <lib_name> LIBRARY DESTINATION lib)
+
+# Header files
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION include)
+```
+- 默认的安装前缀是`/usr/local/`，可以修改cmake中的`CMAKE_INSTALL_PREFIX`变量
+- `cmake -DCMAKE_INSTALL_PREFIX=install ..`
+
+### target_compile_definitions
+- `target_compile_definitions(<target> <populated_type> <flag>)`
+- 单独给每个target添加compile flag，同时指定`PUBLIC|INTERFACE|PRIVATE`，最后再添加一些编译选项
+- `CMAKE_CXX_FLAGS`可以给全部设置编译flag，通常使用cache variable进行强制设置（指定force）
+- 在cmd中通过`cmake -DXXX=XXX ..`的方式似乎能传递macro进入程序
+
+### find_package
+- `find_package(Boost 1.46.1 REQUIRED COMPONENTS filesystem system)`
+- Boost是要find的lib的名字
+- 1.46.1是最低版本号
+- REQUIRED表示这个lib是必须的，没找到就拨错
+- COMPONENTS表示后面那俩东西是lib里面需要找的component
+- 执行这条命令后，将创建`<lib_name>_FOUND`这个变量，用来指示找没找到
